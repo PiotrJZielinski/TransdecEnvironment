@@ -17,8 +17,8 @@ MonoBehaviour:
     numStackedVectorObservations: 1
     vectorActionSize: 04000000
     cameraResolutions:
-    - width: 1280
-      height: 720
+    - width: 416
+      height: 416
       blackAndWhite: 0
     vectorActionDescriptions:
     - movementLongitudinal
@@ -27,3 +27,4 @@ MonoBehaviour:
     - movementYaw
     vectorActionSpaceType: 1
   model: {fileID: 0}
+  inferenceDevice: 0
