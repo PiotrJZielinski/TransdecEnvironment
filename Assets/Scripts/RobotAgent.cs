@@ -29,10 +29,6 @@ public class RobotAgent : Agent {
     Quaternion targetRotation;
     Vector3 startPos;
     float startAngle;
-    bool collided;
-    float collisions;
-    float aboveSuface;
-    float velocityBonus;
 
     float angle;
     Vector3 pos;
@@ -77,16 +73,12 @@ public class RobotAgent : Agent {
         targetRotation = target.GetComponent<Rigidbody>().rotation;
         startPos = GetPosition();
         startAngle = GetAngle();
-        SetReward(0.0f);
+        ResetReward();
         if (dataCollection) {
             annotations.activate = true;
             agentParameters.numberOfActionsBetweenDecisions = 1;
         }
         target.SetActive(positiveExamples);
-        collided = false;
-        collisions = 0.0f;
-        aboveSuface = 0.0f;
-        velocityBonus = 0.0f;
     }
 
     public override void CollectObservations() {
@@ -135,6 +127,10 @@ public class RobotAgent : Agent {
         angle = GetAngle();
         float currentReward = CalculateReward();
         SetReward(currentReward);
+        if (engine.isAboveSurface()) {
+            SetReward(-1.0f);
+            Done();
+        }
     }
 
     public Bounds GetComplexBounds(GameObject obj) {
@@ -164,32 +160,17 @@ public class RobotAgent : Agent {
         return relativeYaw;
     }
 
-    float CalculateReward() {
-        /*  reward function, which is a normalized sum of expressions:
-                2^((x0 - x) / x0) - 1 
-            calculated for each essential value
-        */
-        Vector3 velocity = transform.InverseTransformDirection(rbody.velocity);
-        Vector3 angularVelocity = transform.InverseTransformDirection(rbody.angularVelocity);
-        if (velocity.z > 0.4)
-            velocityBonus = 1f;
-        if (Math.Abs(velocity.x) + Math.Abs(velocity.y) + Math.Abs(velocity.z) + Math.Abs(angularVelocity.y) < 0.4) {
-            velocityBonus += -0.1f;
-        }
-        if (collided) {
-            collisions += 0.5f;
-        }
-        if (engine.isAboveSurface() == 1) {
-            aboveSuface += 0.5f;
-        }
+    float CalculateReward(float headingProp = 0.5f, float velocityProp = 0.5f) {
+        // normalize proportions
+        headingProp = headingProp / (headingProp + velocityProp);
+        velocityProp = velocityProp / (headingProp + velocityProp);
         int currentStep = GetStepCount();
         int maxSteps = 5000;
-        float reward = (CalculateSingleReward(pos.x, startPos.x) + 
-                        CalculateSingleReward(pos.y, startPos.y) + 
-                        CalculateSingleReward(pos.z, startPos.z) +
-                        CalculateSingleReward(angle, startAngle)) / 4 +
-                        0.2f * velocityBonus -
-                        0.2f * collisions - 0.2f * aboveSuface;
+        Vector3 towardsTarget = Vector3.Normalize(targetCenter - rbody.position);
+        Vector3 agentForward = rbody.rotation * Vector3.forward;
+        float headingAngleDiff = (float)(Math.Cos(Vector3.Angle(towardsTarget, agentForward) * Math.PI / 180));
+        float velocityAngleDiff = (float)(Math.Cos(Vector3.Angle(towardsTarget, rbody.velocity) * Math.PI / 180));
+        float reward = headingProp * headingAngleDiff + velocityProp * velocityAngleDiff * rbody.velocity.magnitude / 2;
         if (reward > 0)
             reward = reward * (1 - 0.5f * currentStep / maxSteps);
         return reward;
@@ -201,11 +182,8 @@ public class RobotAgent : Agent {
     }
 
     void OnCollisionEnter() {
-        collided = true;
-    }
-
-    void OnCollisionExit() {
-        collided = false;
+        SetReward(-1.0f);
+        Done();
     }
 
     void OnTriggerEnter(Collider other) {
