@@ -11,7 +11,9 @@ public class Accelerometer : MonoBehaviour
     private Vector3 lastAngularVelocity;
     private Vector3 angularAcceleration;
     private Vector3 startRotation;
-    // Start is called before the first frame update
+    System.DateTime startTime;
+    System.DateTime startAngularTime;
+
     void Start()
     {
 		robot = this.transform.parent.gameObject;
@@ -19,34 +21,47 @@ public class Accelerometer : MonoBehaviour
         lastVelocity = transform.InverseTransformDirection(rbody.velocity);
         lastAngularVelocity = transform.InverseTransformDirection(rbody.angularVelocity);
         startRotation = rbody.rotation.eulerAngles;
+        startTime = System.DateTime.UtcNow;
+        startAngularTime = System.DateTime.UtcNow;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Vector3 localVelocity = transform.InverseTransformDirection(rbody.velocity);
-        acceleration = (localVelocity - lastVelocity) / Time.fixedDeltaTime;
-        Vector3 localAngularVelocity = transform.InverseTransformDirection(rbody.angularVelocity);
-        angularAcceleration = (localAngularVelocity - lastAngularVelocity) / Time.fixedDeltaTime;
-        lastVelocity = localVelocity;
-        lastAngularVelocity = localAngularVelocity;
+    float UpdateTime(bool angular = false) {
+        float deltaTime;
+        System.DateTime currentTime = System.DateTime.UtcNow;
+        if (angular) {
+            deltaTime = (float)(currentTime - startAngularTime).TotalMilliseconds;
+            startAngularTime = currentTime;
+        }
+        else {
+            deltaTime = (float)(currentTime - startTime).TotalMilliseconds;
+            startTime = currentTime;
+        }
+        return deltaTime;
     }
 
     public float[] GetAcceleration() {
         /* get value of accelerations: lateral, vertical, longitudinal */
+        float deltaTime = UpdateTime() / 1000;
+        Vector3 localVelocity = transform.InverseTransformDirection(rbody.velocity);
+        acceleration = (localVelocity - lastVelocity) / deltaTime;
         float[] ret = new float[3];
         ret[0] = acceleration.x;
         ret[1] = acceleration.y;
         ret[2] = acceleration.z;
+        lastVelocity = localVelocity;
         return ret;
     }
 
     public float[] GetAngularAcceleration() {
         /* get value of angular accelerations: pitch, yaw, roll */
+        float deltaTime = UpdateTime(true) / 1000;
+        Vector3 localAngularVelocity = transform.InverseTransformDirection(rbody.angularVelocity);
+        angularAcceleration = (localAngularVelocity - lastAngularVelocity) / deltaTime;
         float[] ret = new float[3];
         ret[0] = angularAcceleration.x;
         ret[1] = angularAcceleration.y;
         ret[2] = angularAcceleration.z;
+        lastAngularVelocity = localAngularVelocity;
         return ret;
     }
 
