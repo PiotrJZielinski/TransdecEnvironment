@@ -42,19 +42,13 @@ public class RobotAcademy : Academy {
             robot.GiveBrain(playerBrain);
             broadcastHub.broadcastingBrains.Clear();
             broadcastHub.broadcastingBrains.Add(playerBrain);
-            robot.targetReset = true;
         }
         else {
             robot.GiveBrain(learningBrain);
             broadcastHub.broadcastingBrains.Clear();
             broadcastHub.broadcastingBrains.Add(learningBrain);
             broadcastHub.SetControlled(learningBrain, true);
-            robot.targetReset = false;
         }
-        if (resetParameters["AgentMaxSteps"] > 0)
-            robot.targetReset = true;
-        else
-            robot.targetReset = false;
         if (resetParameters["CollectData"] == 1 || forceDataCollection) {
             robot.sendRelativeData = true;
             robot.dataCollection = true;
@@ -100,6 +94,7 @@ public class RobotAcademy : Academy {
     }
 
     public override void InitializeAcademy() {
+        robot = GameObject.Find("Robot").GetComponent<RobotAgent>();
         robot.agentParameters.maxStep = (int)(resetParameters["AgentMaxSteps"]);
         if (resetParameters["CollectData"] == 1 || forceDataCollection) {
             if (resetParameters["EnableNoise"] == 1 || forceNoise)
