@@ -35,6 +35,10 @@ public class RandomInit : MonoBehaviour {
 
     public GameObject waterSurface;
 
+    int quarter, xCoef, zCoef;
+
+    GameObject[] newPlanes = new GameObject[0];
+
     public System.Random GetRandomizer() {
         return rnd;
     }
@@ -47,6 +51,7 @@ public class RandomInit : MonoBehaviour {
             if (objects[i].obj.transform.eulerAngles != new Vector3(0f, 0f, 0f)) objects[i].startRotation = objects[i].obj.transform.eulerAngles;
         }
 	}
+
     float getRandom(float min, float max)
     {
         float rand = (float)rnd.NextDouble();
@@ -55,7 +60,6 @@ public class RandomInit : MonoBehaviour {
     }
 
     public void PutAll(bool randomQuarter, bool randomPosition, bool randomOrientation) {
-        int quarter, xCoef, zCoef;
         if (randomQuarter) {
             // select one of the quarters
             quarter = rnd.Next(0, 4);
@@ -75,6 +79,8 @@ public class RandomInit : MonoBehaviour {
             float xPos = xCoef * objects[i].startPosition.x;
             float yPos = objects[i].startPosition.y;
             float zPos = zCoef * objects[i].startPosition.z;
+            // if in other half opposite rotation
+            if (zCoef != xCoef) yRot = -yRot;
             // if on the other side, rotate 180
             if (zCoef == -1) yRot += 180f;
             if (randomPosition)
