@@ -43,11 +43,11 @@ public class Engine : MonoBehaviour {
 			rbody.angularDrag = angularDrag;
 	}
 
-	public int isAboveSurface() {
+	public bool isAboveSurface() {
 		if (rbody.position.y >= top)
-			return 1;
+			return true;
 		else
-			return 0;
+			return false;
 	}
 
 	public void Move(float Longitudinal, float Lateral, float Vertical, float Yaw) {
