@@ -165,6 +165,9 @@ public class RobotAgent : Agent {
         int maxSteps = 5000;
         Vector3 towardsTarget = Vector3.Normalize(targetCenter - rbody.position);
         Vector3 targetForward = targetRotation * Vector3.forward;
+        float direction = Math.Sign(targetCenter.x - rbody.position.x);
+        if (Math.Sign(targetForward.x) != direction)
+            targetForward = Quaternion.AngleAxis(180, Vector3.up) * targetForward;
         Vector3 agentForward = rbody.rotation * Vector3.forward;
         float headingAngleDiff = (float)(Math.Cos(Vector3.Angle(targetForward, agentForward) * Math.PI / 360));
         float velocityAngleDiff = (float)(Math.Cos(Vector3.Angle(towardsTarget, rbody.velocity) * Math.PI / 180));
@@ -172,11 +175,6 @@ public class RobotAgent : Agent {
         if (reward > 0)
             reward = reward * (1 - 0.5f * currentStep / maxSteps);
         return reward;
-    }
-
-    float CalculateSingleReward(float current, float start) {
-        float x0 = Math.Max(0.001f, start);
-        return (float)(Math.Pow(2, (x0 - current) / x0) - 1);
     }
 
     void OnCollisionEnter() {
