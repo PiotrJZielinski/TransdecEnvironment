@@ -20,6 +20,9 @@ MonoBehaviour:
     - width: 416
       height: 416
       blackAndWhite: 0
+    - width: 416
+      height: 416
+      blackAndWhite: 0
     vectorActionDescriptions:
     - movementLongitudinal
     - movementLateral

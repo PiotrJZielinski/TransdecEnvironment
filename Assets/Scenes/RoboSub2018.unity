@@ -180,7 +180,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14633635}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 10.452393, y: 2.422596, z: -23.814207}
+  m_LocalPosition: {x: 7.4204164, y: -33.22364, z: -29.548058}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -750,7 +750,7 @@ Transform:
   m_GameObject: {fileID: 318517414}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 1.6, y: -0.9, z: 0}
-  m_LocalScale: {x: 0.25, y: 1, z: 0.4}
+  m_LocalScale: {x: 0.25, y: 3, z: 0.4}
   m_Children: []
   m_Father: {fileID: 235797412}
   m_RootOrder: 2
@@ -804,7 +804,7 @@ Transform:
   m_GameObject: {fileID: 387196843}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 1.6, y: -0.9, z: 0}
-  m_LocalScale: {x: 5, y: 0.1, z: 5}
+  m_LocalScale: {x: 5, y: 2.5, z: 5}
   m_Children: []
   m_Father: {fileID: 235797412}
   m_RootOrder: 3
@@ -1610,12 +1610,13 @@ MonoBehaviour:
   agentParameters:
     agentCameras:
     - {fileID: 1227796688}
+    - {fileID: 1051573378}
     maxStep: 0
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 10
   target: {fileID: 235797410}
-  targetOffset: {x: 0, y: -0.5, z: 0}
+  targetOffset: {x: 0, y: 0, z: 0}
   sendRelativeData: 0
   dataCollection: 0
   addNoise: 0
@@ -1709,8 +1710,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181653307}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.955, y: 11.139999, z: -27.88}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 8.9638405, y: -10.335468, z: -28.581123}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2456,7 +2457,9 @@ MonoBehaviour:
     xAngRange: 5
     yAngRange: 5
     zAngRange: 5
-    allowedRotations: []
+    allowedRotations:
+    - 0
+    - 180
   - obj: {fileID: 1623013163}
     startPosition: {x: 0, y: 0, z: 0}
     xPosRange: 1
@@ -2724,7 +2727,7 @@ MonoBehaviour:
     - key: Positive
       value: 1
     - key: AgentMaxSteps
-      value: 5000
+      value: 4000
   control: 1
   learningBrain: {fileID: 11400000, guid: 1db808f27a05b4698a73b192e1dc15a1, type: 2}
   playerBrain: {fileID: 11400000, guid: 68314a13d73b6adf69b76fd0b4e7b599, type: 2}
