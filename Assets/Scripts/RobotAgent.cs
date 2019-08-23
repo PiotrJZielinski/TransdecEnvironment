@@ -252,11 +252,9 @@ public class RobotAgent : Agent {
         if (engine.isAboveSurface() || missed)
             reward = -10.0f;
         else if (success) {
-            reward = 10.0f * rotationReward * (rotWeight +
+            reward = 50.0f * rotationReward * (rotWeight +
                     posWeight * (positionRewardX + positionRewardY + positionRewardZ) / 3) *
                 LinDiscountFactor(val: currentStep, target: 0.5f, at: (float)(maxSteps));
-            if (reward > 0.0f)
-                reward = 5 * reward;
         }
         else {
             // state reward:
