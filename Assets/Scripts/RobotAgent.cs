@@ -1,6 +1,8 @@
 using UnityEngine;
 using MLAgents;
 using System;
+using System.IO;
+using System.Collections.Generic;
 
 public class RobotAgent : Agent {
 
@@ -40,6 +42,11 @@ public class RobotAgent : Agent {
     TargetAnnotation annotations;
     RandomInit initializer;
     RandomPosition positionDrawer;
+
+    int result = -1;
+    int hit;
+
+    List<int[]> results = new List<int[]>();
 
     void OnValidate() {
         GameObject agent = transform.parent.gameObject;
@@ -89,6 +96,10 @@ public class RobotAgent : Agent {
         collided = false;
         missed = false;
         success = false;
+        if (result != -1)
+            results.Add(new int[] {hit, result});
+        result = 0;
+        hit = 0;
     }
 
     public override void CollectObservations() {
@@ -137,8 +148,21 @@ public class RobotAgent : Agent {
         angle = GetAngle();
         float reward = CalculateReward();
         SetReward(reward);
-        if (engine.isAboveSurface() || missed || success)
+        if (engine.isAboveSurface())
+        {
+            result = 1;
             Done();
+        }
+        else if (missed)
+        {
+            result = 2;
+            Done();
+        }
+        else if (success)
+        {
+            result = 3;
+            Done();
+        }
     }
 
     public Bounds GetComplexBounds(GameObject obj) {
@@ -252,9 +276,11 @@ public class RobotAgent : Agent {
         if (engine.isAboveSurface() || missed)
             reward = -10.0f;
         else if (success) {
-            reward = 50.0f * rotationReward * (rotWeight +
+            reward = 10.0f * rotationReward * (rotWeight +
                     posWeight * (positionRewardX + positionRewardY + positionRewardZ) / 3) *
                 LinDiscountFactor(val: currentStep, target: 0.5f, at: (float)(maxSteps));
+            if (reward > 0.0f)
+                reward = 5 * reward;
         }
         else {
             // state reward:
@@ -286,6 +312,7 @@ public class RobotAgent : Agent {
 
     void OnCollisionEnter() {
         collided = true;
+        hit = 1;
     }
 
     void OnCollisionExit() {
@@ -297,5 +324,15 @@ public class RobotAgent : Agent {
             success = true;
         else if (other.gameObject.name == "MissPlane" && targetReset)
             missed = true;
+    }
+
+    void OnApplicationQuit() {
+        string filename = "csv/" + System.Guid.NewGuid().ToString() + ".csv";
+        using (StreamWriter writer = new StreamWriter(new FileStream(filename, FileMode.Create, FileAccess.Write)))
+        {
+            foreach (int[] res in results) {
+                writer.WriteLine(String.Join<int>(",", res));
+            }
+        }
     }
 }
