@@ -65,6 +65,7 @@ public class RobotAgent : Agent {
     }
 
 	void Start () {
+        Debug.Log(Directory.GetCurrentDirectory());
         GameObject agent = transform.parent.gameObject;
         annotations = agent.GetComponent<TargetAnnotation>();
         initializer = agent.GetComponent<RandomInit>();
@@ -96,7 +97,7 @@ public class RobotAgent : Agent {
         collided = false;
         missed = false;
         success = false;
-        if (result != -1)
+        if (result != -1 && result != 0)
             results.Add(new int[] {hit, result});
         result = 0;
         hit = 0;
@@ -327,7 +328,7 @@ public class RobotAgent : Agent {
     }
 
     void OnApplicationQuit() {
-        string filename = "csv/" + System.Guid.NewGuid().ToString() + ".csv";
+        string filename = System.Guid.NewGuid().ToString() + ".csv";
         using (StreamWriter writer = new StreamWriter(new FileStream(filename, FileMode.Create, FileAccess.Write)))
         {
             foreach (int[] res in results) {

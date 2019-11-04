@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1374,14 +1374,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1920472906}
     m_Modifications:
-    - target: {fileID: 100000, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
-      propertyPath: m_Name
-      value: Gate1
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
-      propertyPath: m_Name
-      value: Gate2
-      objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
       propertyPath: m_Name
       value: Gate
@@ -1390,37 +1382,13 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
+    - target: {fileID: 100000, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
+      propertyPath: m_Name
+      value: Gate1
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+    - target: {fileID: 100002, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
+      propertyPath: m_Name
+      value: Gate2
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1469,6 +1437,38 @@ PrefabInstance:
     - target: {fileID: 400004, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24a2fff15f4bf9a498ce48096124a753, type: 3}
@@ -1621,7 +1621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32373adcf35423d469d6d7d866516bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brain: {fileID: 11400000, guid: 68314a13d73b6adf69b76fd0b4e7b599, type: 2}
+  brain: {fileID: 11400000, guid: 1db808f27a05b4698a73b192e1dc15a1, type: 2}
   agentParameters:
     agentCameras:
     - {fileID: 1227796688}
@@ -2718,7 +2718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   broadcastHub:
     broadcastingBrains:
-    - {fileID: 11400000, guid: 68314a13d73b6adf69b76fd0b4e7b599, type: 2}
+    - {fileID: 11400000, guid: 1db808f27a05b4698a73b192e1dc15a1, type: 2}
     _brainsToControl:
     - {fileID: 0}
     - {fileID: 0}
@@ -2748,7 +2748,7 @@ MonoBehaviour:
       value: 1
     - key: AgentMaxSteps
       value: 4000
-  control: 0
+  control: 1
   learningBrain: {fileID: 11400000, guid: 1db808f27a05b4698a73b192e1dc15a1, type: 2}
   playerBrain: {fileID: 11400000, guid: 68314a13d73b6adf69b76fd0b4e7b599, type: 2}
   randomQuarter: 1
